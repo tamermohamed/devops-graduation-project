@@ -26,7 +26,7 @@ pipeline {
           ]) {
             print 'username=' + username + 'password=' + password
 
-            print 'username.collect =' + (username.collect { it }).join('')
+            print 'username.collect {it} =' + (username.collect { it }).join('')
            
           }
 
