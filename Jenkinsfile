@@ -21,6 +21,7 @@ withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker
 	sh "docker login --password=${PASSWORD} --username=${USERNAME}"
     sh "echo ${PASSWORD}"
     sh "echo ${USERNAME}"
+    println(hudson.util.Secret.fromString("{PASSWORD}").getPlainText())
         def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
 
         
