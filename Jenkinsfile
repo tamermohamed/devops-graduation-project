@@ -11,7 +11,7 @@ pipeline {
          stage('Upload Docker') {
              steps {
 
-                 println(hudson.util.Secret.fromString("{PASSWORD}").getPlainText())
+                
                  
                  dir("$WORKSPACE")
                  {
