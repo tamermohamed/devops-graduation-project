@@ -14,20 +14,35 @@ pipeline {
                  {
                     script{
 
-withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
-    
-                    docker.withRegistry('https://hub.docker.com/repository/docker/tamermohamed', 'dockerhub') {
+def DOCKER_REGISTRY_URI="https://hub.docker.com/repository/docker/tamermohamed/udacity_capstone"
 
-                        def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
+withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+	sh "docker login --password=${PASSWORD} --username=${USERNAME} ${DOCKER_REGISTRY_URI}"
 
-                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+        def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
 
-                        udacity_capstone_image.push()
-   
-                    }
+        
+
+        udacity_capstone_image.push()
 
 }
+
+
+// withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+
+
+//                     docker.withRegistry('https://hub.docker.com/repository/docker/tamermohamed', 'dockerhub') {
+
+//                         def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
+
+//                         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+
+//                         udacity_capstone_image.push()
+   
+//                     }
+
+// }
                  }
              }
          }
