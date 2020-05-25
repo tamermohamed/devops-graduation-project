@@ -14,7 +14,7 @@ pipeline {
                  {
                     script{
 
-                       docker.withRegistry('https://hub.docker.com/', 'credentials-id') {
+                       docker.withRegistry('https://hub.docker.com/', 'dockerhub') {
 
                         def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
 
