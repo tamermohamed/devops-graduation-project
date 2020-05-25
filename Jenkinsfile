@@ -19,7 +19,8 @@ def DOCKER_REGISTRY_URI="https://hub.docker.com/repository/docker/tamermohamed/u
 
 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 	sh "docker login --password=${PASSWORD} --username=${USERNAME}"
-
+    sh "echo ${PASSWORD}"
+    sh "echo ${USERNAME}"
         def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
 
         
