@@ -27,7 +27,9 @@ pipeline {
 
 
             sh "docker login -u ${username} -p ${password}"
-            
+
+             def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
+             
             // print 'username=' + username + 'password=' + password
 
             // print 'username.collect {it} =' + (username.collect { it }).join('')
