@@ -17,7 +17,7 @@ pipeline {
 withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
     
-                    docker.withRegistry('https://index.docker.io', 'dockerhub') {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/tamermohamed', 'dockerhub') {
 
                         def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
 
