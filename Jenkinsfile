@@ -25,7 +25,7 @@ pipeline {
               passwordVariable: 'password')
           ]) {
 
-
+            docker.build("udacity_capstone")
             sh "docker login -u ${username} -p ${password}"
             sh "docker tag udacity_capstone tamermohamed/udacity_capstone:v1.0"
             sh "docker push tamermohamed/udacity_capstone:v1.0"
