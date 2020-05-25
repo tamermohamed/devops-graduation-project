@@ -19,6 +19,10 @@ pipeline {
 
 
 def DOCKER_REGISTRY_URI="https://hub.docker.com/repository/docker/tamermohamed/udacity_capstone"
+withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'passwordVariable')]) {
+sh  "echo username= ${username} , password= ${password}"
+
+}
 
 // withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'passwordVariable')]) {
 
