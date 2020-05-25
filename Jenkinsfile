@@ -27,10 +27,10 @@ pipeline {
 
 
             sh "docker login -u ${username} -p ${password}"
+            sh "docker tag udacity_capstone tamermohamed/udacity_capstone:v1.0"
+            sh "docker push tamermohamed/udacity_capstone:v1.0"
 
-            def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
-
-            udacity_capstone_image.push()
+            
 
             // print 'username=' + username + 'password=' + password
 
