@@ -22,7 +22,7 @@ def DOCKER_REGISTRY_URI="https://hub.docker.com/repository/docker/tamermohamed/u
 
 withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'passwordVariable')]) {
 
-                    print 'username=' + username + 'password=' + password
+                    sh  "echo username= ${username} , password= ${password}"
                     docker.withRegistry('https://hub.docker.com/repository/docker/tamermohamed', 'dockerhub') {
 
                         def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
