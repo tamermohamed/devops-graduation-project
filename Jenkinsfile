@@ -20,31 +20,31 @@ pipeline {
 
 def DOCKER_REGISTRY_URI="https://hub.docker.com/repository/docker/tamermohamed/udacity_capstone"
 
-withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'passwordVariable')]) {
+// withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'username', passwordVariable: 'passwordVariable')]) {
 
-                    sh  "echo username= ${username} , password= ${password}"
-                    // docker.withRegistry('https://hub.docker.com/repository/docker/tamermohamed', 'dockerhub') {
+//                     sh  "echo username= ${username} , password= ${password}"
+//                     // docker.withRegistry('https://hub.docker.com/repository/docker/tamermohamed', 'dockerhub') {
 
-                    //     def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
+//                     //     def udacity_capstone_image = docker.build("udacity_capstone:v1.0")
                        
-                    //     sh "docker login -u ${username} -p ${password}"
+//                     //     sh "docker login -u ${username} -p ${password}"
 
-                    //     udacity_capstone_image.push()
+//                     //     udacity_capstone_image.push()
    
-                    // }
+//                     // }
 
-}
+// }
                  }
              }
          }
          }
 
 
-         stage('Security Scan') {
-              steps { 
-                 aquaMicroscanner imageName: 'tamermohamed/udacity_capstone:v1.0', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
-              }
-         } 
+        //  stage('Security Scan') {
+        //       steps { 
+        //          aquaMicroscanner imageName: 'tamermohamed/udacity_capstone:v1.0', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
+        //       }
+        //  } 
 
          // stage('Upload to AWS') {
          //      steps {
