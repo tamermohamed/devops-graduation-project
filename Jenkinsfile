@@ -2,7 +2,7 @@ pipeline {
      agent any
      stages {
          
-         stage('Lint HTML') {
+         stage('Lint') {
               steps {
                   sh 'tidy -q -e ./app/*.html'
               }
@@ -38,11 +38,24 @@ pipeline {
          }
          }
 
-         stage('Security Scan') {
-              steps { 
-                 aquaMicroscanner imageName: 'tamermohamed/udacity_capstone:v1.0', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
-              }
+         stage('Deploy To Kubernetes') {
+            steps {
+                dir('kubernetes') {
+                    withAWS(credentials: 'AWSCredentilas', region: 'us-west-2') {
+
+                        sh '''
+
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
+
+                        '''
+                           
+                        }
+                    }
+            }
         }
+
+
 
          // stage('Upload to AWS') {
          //      steps {
