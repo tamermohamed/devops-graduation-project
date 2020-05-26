@@ -68,14 +68,14 @@
                 },
                 "GroupDescription": "EKSSecurityGroup",
                 "SecurityGroupIngress": [{
-                    "IpProtocol": -1,
+                    "IpProtocol": "tcp",
                     "FromPort": 0,
                     "ToPort": 65535,
                     "CidrIp": "0.0.0.0/0"
                     
                 }],
                 "SecurityGroupEgress": [{
-                    "IpProtocol": -1,
+                    "IpProtocol": "tcp",
                     "FromPort": 0,
                     "ToPort": 65535,
                     "CidrIp": "0.0.0.0/0"
@@ -250,7 +250,7 @@
             "Type": "AWS::EKS::Cluster",
             "Properties": {
                 "Name": "production",
-                "Version": "1.14",
+                "Version": "1.16",
                 "RoleArn": {
                     "Fn::GetAtt": [
                         "EKSRole",
@@ -280,7 +280,7 @@
                 },
                 "GroupDescription": "Instance Security Group",
                 "SecurityGroupIngress": [{
-                    "IpProtocol": -1,
+                    "IpProtocol": "tcp",
                     "FromPort": 0,
                     "ToPort": 65535,
                     "CidrIp": "0.0.0.0/0"
