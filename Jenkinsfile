@@ -41,7 +41,7 @@ pipeline {
          stage('Deploy To Kubernetes') {
             steps {
                 dir('kubernetes') {
-                    withAWS(credentials: 'AWSCredentilas', region: 'us-west-2') {
+                    withAWS(credentials: 'eks', region: 'us-west-2') {
 
                         sh '''
 
