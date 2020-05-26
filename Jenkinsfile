@@ -38,13 +38,13 @@ pipeline {
          }
          }
 
-         stage('Deploy To Kubernetes') {
+         stage('EKS Deploy') {
             steps {
                 dir('kubernetes') {
                     withAWS(credentials: 'eks', region: 'us-west-2') {
 
                         sh '''
-
+                        aws eks --region us-west-2 update-kubeconfig --name udacity_project
                         kubectl apply -f deployment.yaml
                         kubectl apply -f service.yaml
 
