@@ -44,7 +44,7 @@ pipeline {
                     withAWS(credentials: 'eks', region: 'us-west-2') {
 
                         sh '''
-                        aws eks --region us-west-2 update-kubeconfig --name production
+                        /home/ubuntu/.local/bin/aws eks --region us-west-2 update-kubeconfig --name production
                         kubectl apply -f deployment.yaml
                         kubectl apply -f service.yaml
 
