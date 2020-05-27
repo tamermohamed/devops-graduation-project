@@ -38,13 +38,31 @@ pipeline {
         //  }
         //  }
 
+
+// stage('Test EKS Deploy') {
+//             steps {
+//                 dir('kubernetes') {
+//                     withAWS(credentials: 'eks', region: 'us-west-2') {
+
+//                         sh '''
+//                         /home/ubuntu/.local/bin/aws eks --region us-west-2 update-kubeconfig --name production
+//                         kubectl apply -f deployment.yaml
+//                         kubectl apply -f service.yaml
+
+//                         '''
+                           
+//                         }
+//                     }
+//             }
+//         }
+
          stage('EKS Deploy') {
             steps {
                 dir('kubernetes') {
                     withAWS(credentials: 'eks', region: 'us-west-2') {
 
                         sh '''
-                        /home/ubuntu/.local/bin/aws eks --region us-west-2 update-kubeconfig --name production
+                        aws eks --region us-west-2 update-kubeconfig --name production
                         kubectl apply -f deployment.yaml
                         kubectl apply -f service.yaml
 
