@@ -46,6 +46,7 @@ stage('deploy v1 to eks')
             
 
                         sh '''
+                        kubectl get pods
                         kubectl apply -f deployment.yml
                         kubectl apply -f service.yml
                         '''
@@ -62,6 +63,7 @@ stage('deploy v2 to eks')
             
 
                         sh '''
+                        kubectl get pods
                         kubectl apply -f deployment.yml
                         kubectl apply -f service.yml
                         '''
