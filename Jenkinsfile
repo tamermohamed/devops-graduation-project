@@ -50,7 +50,7 @@ stage('deploy cluster')
             
 
                         sh '''
-                        /var/lib/jenkins/bin
+                        /var/lib/jenkins/bin/aws-iam-authenticator
                         kubectl get svc
                         kubectl apply -f deployment.yaml
                         kubectl apply -f service.yaml
