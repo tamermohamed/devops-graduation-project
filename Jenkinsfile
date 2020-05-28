@@ -58,6 +58,7 @@ pipeline {
 
 stage('deploy cluster')
 {
+    steps {
      dir('kubernetes') {
                    
 
@@ -69,6 +70,7 @@ stage('deploy cluster')
                         '''
                            
                         }
+    }
                     
 }
          stage('EKS Deploy') {
