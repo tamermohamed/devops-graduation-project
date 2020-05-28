@@ -61,7 +61,7 @@ stage('deploy cluster')
     steps{
         dir('kubernetes')
         {
-            kubernetesDeploy(kubeconfigId: 'kube', configs: 'deployment.yaml', enableConfigSubstitution: true)        
+            kubernetesDeploy(kubeconfigId: 'kube', configs: 'kubernetes/deployment.yaml', enableConfigSubstitution: true)        
         }
     }
 }
