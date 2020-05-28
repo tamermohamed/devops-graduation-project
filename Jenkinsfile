@@ -59,7 +59,7 @@ pipeline {
 stage('deploy cluster')
 {
     steps{
-        dir('')
+        dir('kubernetes')
         {
             kubernetesDeploy(kubeconfigId: 'kube', configs: 'deployment.yaml', enableConfigSubstitution: true)        
         }
