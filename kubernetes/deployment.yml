@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: capstone-project
-        image: tamermohamed/udacity_capstone:v1.0
+        image: tamermohamed/udacity_capstone:v2.0
         resources:
           limits:
             memory: "128Mi"
