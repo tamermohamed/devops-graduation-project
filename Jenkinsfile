@@ -39,18 +39,15 @@ pipeline {
          }
          }
 
-stage('deploy to eks')
+stage('deploy v1 to eks')
 {
     steps {
-     dir('kubernetes') {
+     dir('deployv1') {
             
 
                         sh '''
-                        
-                        kubectl get svc
                         kubectl apply -f deployment.yml
                         kubectl apply -f service.yml
-
                         '''
                            
                         }
@@ -58,7 +55,21 @@ stage('deploy to eks')
                     
 }
          
+stage('deploy v2 to eks')
+{
+    steps {
+     dir('deployv2') {
+            
 
+                        sh '''
+                        kubectl apply -f deployment.yml
+                        kubectl apply -f service.yml
+                        '''
+                           
+                        }
+    }
+                    
+}
 
 
      }
