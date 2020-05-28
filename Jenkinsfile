@@ -59,10 +59,9 @@ pipeline {
 stage('deploy cluster')
 {
     steps{
-        dir('kubernetes')
-        {
+        
             kubernetesDeploy(kubeconfigId: 'kube', configs: 'deployment.yaml', enableConfigSubstitution: true)        
-        }
+       
     }
 }
          stage('EKS Deploy') {
