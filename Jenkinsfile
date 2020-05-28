@@ -3,9 +3,9 @@ pipeline {
      stages {
          
          stage('Lint') {
-              steps {
-                  sh 'tidy -q -e ./app/*.html'
-              }
+            //   steps {
+            //       sh 'tidy -q -e ./app/*.html'
+            //   }
          }
 
         //  stage('Upload Docker') {
