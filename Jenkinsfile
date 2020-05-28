@@ -58,11 +58,18 @@ pipeline {
 
 stage('deploy cluster')
 {
-    steps{
-        
-            kubernetesDeploy(kubeconfigId: 'kube', configs: 'deployment.yaml', enableConfigSubstitution: true)        
-       
-    }
+     dir('kubernetes') {
+                   
+
+                        sh '''
+                        
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
+
+                        '''
+                           
+                        }
+                    
 }
          stage('EKS Deploy') {
             steps {
