@@ -63,7 +63,7 @@ stage('deploy cluster')
                    
 
                         sh '''
-                        
+                        kubectl get svc
                         kubectl apply -f deployment.yaml
                         kubectl apply -f service.yaml
 
