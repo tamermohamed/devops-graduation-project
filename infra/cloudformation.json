@@ -92,6 +92,7 @@
         "PublicSubnet1": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
+                "MapPublicIpOnLaunch":"True",
                 "AvailabilityZone": {
                     "Fn::Select": [
                         "0",
@@ -120,6 +121,7 @@
         "PublicSubnet2": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
+                "MapPublicIpOnLaunch":"True",
                 "AvailabilityZone": {
                     "Fn::Select": [
                         "1",
@@ -207,56 +209,14 @@
                 }
             }
         },
-        "EKSProfile": {
-            "Type": "AWS::IAM::InstanceProfile",
-            "Properties": {
-                "Path": "/",
-                "Roles": [
-                    {
-                        "Ref": "EKSRole"
-                    }
-                ]
-            }
-        },
-        "EKSRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "eks.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
-                            ]
-                        }
-                    ]
-                },
-                "Path": "/",
-                "RoleName": "EKSRole",
-                "ManagedPolicyArns": [
-                    "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
-                    "arn:aws:iam::aws:policy/AmazonEKSServicePolicy",
-                    "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
-                ]
-            }
-        },
+     
         "ProdCluster": {
+           
             "Type": "AWS::EKS::Cluster",
             "Properties": {
-                "Name": "production",
-                "Version": "1.16",
-                "RoleArn": {
-                    "Fn::GetAtt": [
-                        "EKSRole",
-                        "Arn"
-                    ]
-                },
+                "Name": "productionCluster",
+                "Version": "1.15",
+                "RoleArn": "arn:aws:iam::759517972666:role/eks_cluster",
                 "ResourcesVpcConfig": {
                     "SecurityGroupIds": [{
                         "Ref": "EKSSecurityGroup"
@@ -272,130 +232,24 @@
             }
         },
 
-        "InstanceSecurityGroup": {
-            "Type": "AWS::EC2::SecurityGroup",
+   
+        "EKSNodegroup": {
+            "DependsOn":"ProdCluster",
+            "Type": "AWS::EKS::Nodegroup",
             "Properties": {
-                "VpcId": {
-                    "Ref": "UdacityVPC"
+                "ClusterName": "productionCluster",
+                "NodeRole":"arn:aws:iam::759517972666:role/eks_node",
+                "ScalingConfig": {
+                    "MinSize": 2,
+                    "DesiredSize": 2,
+                    "MaxSize": 2
                 },
-                "GroupDescription": "Instance Security Group",
-                "SecurityGroupIngress": [{
-                    "IpProtocol": "tcp",
-                    "FromPort": 0,
-                    "ToPort": 65535,
-                    "CidrIp": "0.0.0.0/0"
-                    
-                }],
-                "SecurityGroupEgress": [{
-                    "IpProtocol":"tcp",
-                    "FromPort": 0,
-                    "ToPort": 65535,
-                    "CidrIp": "0.0.0.0/0"
-                   
-                }],
-                "Tags": [{
-                    "Key": "Name",
-                    "Value": {
-                        "Fn::Sub": "${EnvironmentName} Instance Security Group"
-                    }
-                }]
-            }
-        },
-
-        "InstanceRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "ec2.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
-                            ]
-                        }
-                    ]
-                },
-                "Path": "/",
-                "RoleName": "EKSInstanceRole",
-                "ManagedPolicyArns": [
-                    "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
-                    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
-                    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+                "Subnets": [
+                    {"Ref":"PublicSubnet1"},
+                    {"Ref":"PublicSubnet2"}
                 ]
-            }
-        },
-
-        "InstanceProfile": {
-            "Type": "AWS::IAM::InstanceProfile",
-            "Properties": {
-                "Path": "/",
-                "Roles": [
-                    {
-                        "Ref": "InstanceRole"
-                    }
-                ]
-            }
-        },
-
-        "AutoScalingGroup1": {
-            "Type": "AWS::AutoScaling::AutoScalingGroup",
-            "Properties": {
-                "MinSize": 1,
-                "MaxSize": 1,
-                "VPCZoneIdentifier": [
-                    {
-                        "Ref": "PublicSubnet1"
-                    },
-                    {
-                        "Ref": "PublicSubnet2"
-                    }
-                ],
-                "LaunchConfigurationName": {
-                    "Ref": "AutoScalingLuanchConfigInstance"
-                },
-                "Tags": [
-                    {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Sub": "${EnvironmentName} AutoScaling Group 1 (AZ1)"
-                        },
-                        "PropagateAtLaunch": "true"
-                    }
-                ]
-            }
-        },
-          "AutoScalingLuanchConfigInstance": {
-            "Type": "AWS::AutoScaling::LaunchConfiguration",
-            "Properties": {
-                "AssociatePublicIpAddress": "False",
-                "SecurityGroups": [
-                    {
-                        "Ref": "InstanceSecurityGroup"
-                    }
-                ],
-                "IamInstanceProfile": {
-                    "Ref": "InstanceProfile"
-                },
-                "BlockDeviceMappings": [
-                    {
-                        "DeviceName": "/dev/sdk",
-                        "Ebs": {
-                            "VolumeSize": "10"
-                        }
-                    }
-                ],
-                "InstanceType": "t2.micro",
-                "ImageId": "ami-0d1cd67c26f5fca19"
             }
         }
-
-
     }
 
 }

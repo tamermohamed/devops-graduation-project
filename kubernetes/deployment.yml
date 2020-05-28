@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: capstone-project
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: capstone-project
@@ -13,7 +14,7 @@ spec:
     spec:
       containers:
       - name: capstone-project
-        image: tamermohamed/tamermohamed/udacity_capstone:v1.0
+        image: tamermohamed/udacity_capstone:v1.0
         resources:
           limits:
             memory: "128Mi"
