@@ -5,7 +5,7 @@ pipeline {
          stage('Lint') {
                steps
              {
-                sh 'tidy -q -e ./app/*.html'
+                sh "tidy -q -e ./app/*.html"
               }
          }
 
