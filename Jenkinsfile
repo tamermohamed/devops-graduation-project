@@ -48,6 +48,10 @@ stage('deploy cluster')
     steps {
      dir('kubernetes') {
                    
+                    environment {
+    PATH = "/var/lib/jenkins/bin:$PATH"
+  }
+
 
                         sh '''
                         kubectl get svc
