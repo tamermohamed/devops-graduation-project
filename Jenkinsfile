@@ -47,13 +47,10 @@ stage('deploy cluster')
 {
     steps {
      dir('kubernetes') {
-                   
-                    environment {
-    PATH = "/var/lib/jenkins/bin:$PATH"
-  }
-
+            
 
                         sh '''
+                        /var/lib/jenkins/bin
                         kubectl get svc
                         kubectl apply -f deployment.yaml
                         kubectl apply -f service.yaml
