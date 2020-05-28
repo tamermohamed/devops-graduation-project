@@ -56,23 +56,23 @@ pipeline {
 //             }
 //         }
 
-// stage('deploy cluster')
-// {
-//     steps {
-//      dir('kubernetes') {
+stage('deploy cluster')
+{
+    steps {
+     dir('kubernetes') {
                    
 
-//                         sh '''
+                        sh '''
                         
-//                         kubectl apply -f deployment.yaml
-//                         kubectl apply -f service.yaml
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
 
-//                         '''
+                        '''
                            
-//                         }
-//     }
+                        }
+    }
                     
-// }
+}
          stage('EKS Deploy') {
             steps {
                 dir('kubernetes') {
