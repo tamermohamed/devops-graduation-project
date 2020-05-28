@@ -2,13 +2,13 @@ pipeline {
      agent any
      stages {
          
-         stage('Lint') {
-               steps
-             {
-                 sh "echo test"
-            //       sh 'tidy -q -e ./app/*.html'
-              }
-         }
+        //  stage('Lint') {
+        //        steps
+        //      {
+        //          sh "echo test"
+        //     //       sh 'tidy -q -e ./app/*.html'
+        //       }
+        //  }
 
         //  stage('Upload Docker') {
         //      steps {
