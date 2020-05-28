@@ -43,10 +43,10 @@ pipeline {
 
 
 
-stage('deploy cluster')
+stage('deploy to eks')
 {
     steps {
-     dir('kubernetes') {
+     
             
 
                         sh '''
@@ -57,7 +57,7 @@ stage('deploy cluster')
 
                         '''
                            
-                        }
+                       
     }
                     
 }
